@@ -1,0 +1,29 @@
+.title {
+    margin-bottom: 1rem;
+}
+
+.title-center {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: .75rem;
+}
+
+.underline {
+    width: 50px;
+    height: 3px;
+    background-color: rgba(39, 245, 161, 0.86);
+    margin: 0 auto;
+}
+
+@media(min-width: 768px) {
+    .title-center {
+        font-size: 2rem;
+        margin-bottom: .75rem;
+    }
+    .underline {
+        width: 120px;
+        height: 5px;
+        background-color: rgba(39, 245, 161, 0.86);
+        margin: 0 auto;
+    }
+}

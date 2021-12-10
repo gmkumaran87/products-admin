@@ -1,0 +1,58 @@
+.menu-form {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    letter-spacing: 2px;
+}
+
+label {
+    margin-top: .5rem;
+    margin-bottom: .25rem;
+    font-size: 1rem;
+}
+
+input {
+    padding: .25rem;
+    letter-spacing: 2px;
+}
+
+textarea {
+    margin-top: 1rem;
+}
+
+.error {
+    color: #f00;
+}
+
+.btn {
+    background-color: rgba(39, 245, 161, 0.86);
+    padding: .5rem .5rem;
+    /* width: 100%; */
+    margin-top: 1rem;
+    border: none;
+    font-size: 1.2rem;
+    color: #fff;
+    border-radius: 4px;
+    letter-spacing: 2px;
+}
+
+.btn:active {
+    transform: scale(.9);
+}
+
+@media(min-width: 768px) {
+    .title-center {
+        font-size: 2rem;
+        margin-bottom: .75rem;
+    }
+    .underline {
+        width: 120px;
+        height: 5px;
+        background-color: rgba(39, 245, 161, 0.86);
+        margin: 0 auto;
+    }
+    .menu-form {
+        width: 75%;
+    }
+}

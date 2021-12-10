@@ -1,0 +1,29 @@
+.main-center {
+    max-width: 1440px;
+    font-family: inherit;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: .75rem;
+    margin: 1rem 0 1rem 0;
+    width: 100%;
+}
+
+@media(min-width: 768px) {
+    .main-center {
+        padding: 2rem 2rem;
+        width: 80%;
+        margin: 0 auto;
+    }
+    .main-center h2 {
+        font-size: 2rem;
+    }
+}
+
+@media(min-width: 768px) {
+    .main-center {
+        padding: 2rem 1rem;
+        width: 80%;
+    }
+}
