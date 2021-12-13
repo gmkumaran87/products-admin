@@ -3,7 +3,7 @@ import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import "./AddProducts.css";
 import { useGlobalContext } from "../context/Context";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Title from "../wrappers/Title";
 
 const MyTextInput = ({ label, ...props }) => {
@@ -36,20 +36,40 @@ const MyTextArea = ({ label, ...props }) => {
 };
 
 const AddProducts = (props) => {
-  const { addItem } = useGlobalContext();
+  const { addItem, items, editItem } = useGlobalContext();
 
   const navigate = useNavigate();
+  const productId = useParams().productId;
+
+  let stateObj = {
+    itemName: "",
+    price: "",
+    stock: "",
+    itemUrl: "",
+    itemDesc: "",
+  };
+  const initialState = {
+    itemName: "",
+    price: "",
+    stock: "",
+    itemUrl: "",
+    itemDesc: "",
+  };
+
+  // If the Params are available then load the current user in the form
+  if (productId) {
+    const [product] = items.filter((el) => el.id === productId);
+    // console.log("EDITED USER", editUser, users);
+    stateObj = product;
+  } else {
+    stateObj = initialState;
+  }
+
   return (
     <>
       <Title title="Add Product" />
       <Formik
-        initialValues={{
-          itemName: "",
-          price: "",
-          stock: "",
-          itemUrl: "",
-          itemDesc: "",
-        }}
+        initialValues={stateObj}
         validationSchema={Yup.object({
           itemName: Yup.string()
             .max(35, "Must be 35 characters or less")
@@ -63,12 +83,16 @@ const AddProducts = (props) => {
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setTimeout(() => {
-            // alert(JSON.stringify(values, null, 2));
-            console.log(values);
-            addItem(values);
+            if (productId) {
+              editItem(values, productId);
+            } else {
+              addItem(values);
+            }
+            //addItem(values);
             setSubmitting(false);
           }, 400);
           resetForm({ values: "" });
+          console.log("After updation/creation");
           navigate("/all-products/", { replace: true });
         }}
       >
@@ -79,14 +103,12 @@ const AddProducts = (props) => {
             type="text"
             placeholder="Product Name"
           />
-
           <MyTextInput
             label="Price"
             name="price"
             type="number"
             placeholder="Enter Price"
           />
-
           <MyTextInput
             label="Stock"
             name="stock"

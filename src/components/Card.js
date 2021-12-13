@@ -1,17 +1,21 @@
 import React from "react";
 import "./Card.css";
 import { useGlobalContext } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 
 const Card = (props) => {
   const { deleteItem, editItem } = useGlobalContext();
 
   const { itemName, price, stock, itemDesc, itemUrl, id } = props;
 
+  const navigate = useNavigate();
+
   const handleClick = (e, id) => {
     console.log(e.target.dataset.type, id);
 
     if (e.target.dataset.type === "edit") {
-      editItem(id);
+      navigate(`/edit-product/${id}`, { replace: true });
+      //  editItem(id);
     } else {
       deleteItem(id);
     }

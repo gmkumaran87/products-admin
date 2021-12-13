@@ -19,7 +19,6 @@ const Context = ({ children }) => {
     console.log("Getting the Items from DB");
     try {
       const result = await axios.get(URL);
-      console.log(result);
       dispatch({ type: "ADD_ITEMS", payload: result.data });
     } catch (error) {
       console.log(error);
@@ -30,28 +29,28 @@ const Context = ({ children }) => {
     const saveMenu = async (obj) => {
       try {
         const result = await axios.post(URL, obj);
-        console.log(typeof result.status);
         if (result.status === 201) loadItems();
       } catch (error) {
         console.log(error);
       }
     };
-
-    console.log("Context Additem", obj);
     saveMenu(obj);
   };
 
-  const editItem = (id) => {
-    const editMenu = async (id) => {
+  const editItem = (obj, id) => {
+    const newUrl = `${URL}/${id}`;
+    const editMenu = async () => {
       try {
-        const res = await axios.put(`URL/${id}`);
-        console.log(res);
+        const res = await axios.put(newUrl, obj);
+        if (res.status === 200) {
+          loadItems();
+        }
       } catch (error) {
         console.log(error);
       }
     };
-    console.log(id);
-    editMenu(id);
+
+    editMenu();
   };
 
   const deleteItem = (id) => {
@@ -59,8 +58,10 @@ const Context = ({ children }) => {
     const deleteMenu = async () => {
       try {
         const res = await axios.delete(newUrl);
-        console.log(res);
-        if (res.status === "OK") loadItems();
+        if (res.status === 200) {
+          console.log("Inside IF condition");
+          loadItems();
+        }
       } catch (error) {
         console.log(error);
       }
@@ -71,14 +72,13 @@ const Context = ({ children }) => {
 
   // Load intial values
   useEffect(() => {
-    console.log("Calling UseEffect");
+    let controller = new AbortController();
     loadItems();
+    return () => {
+      console.log("Cleaning up");
+      controller?.abort();
+    };
   }, []);
-
-  /* useEffect(() => {
-    console.log("Calling Updated UseEffect");
-    dispatch({ type: "ADD_ITEMS", payload: state.items });
-  }, [state.items]);*/
 
   return (
     <MenuContext.Provider value={{ ...state, addItem, deleteItem, editItem }}>

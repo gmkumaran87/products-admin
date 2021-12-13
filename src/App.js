@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Products from "./pages/Products";
 import AddProducts from "./pages/AddProducts";
+import EditProduct from "./components/EditProduct";
 import Main from "./wrappers/Main";
-import { useGlobalContext } from "./context/Context";
 
 function App() {
   return (
@@ -15,6 +15,9 @@ function App() {
           <Route path="/" element={<Products />} />
           <Route path="/add-product/" element={<AddProducts />} />
           <Route path="*" element={<Products />} />
+          <Route path="/edit-product/:productId" element={<EditProduct />}>
+            <Route path="" element={<AddProducts />} />
+          </Route>
         </Routes>
       </Main>
     </Router>
